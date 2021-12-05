@@ -1,0 +1,15 @@
+[package]
+name = "extra-cosmic-xkill"
+version = "0.1.0"
+edition = "2021"
+authors = ["Vitória Maria <vitoria.maria@example.com>"]
+description = "Applet sistema para gerenciamento de janelas X11/Wayland"
+license = "MIT"
+
+[dependencies]
+
+[dev-dependencies]
+
+[[bin]]
+name = "xkill-applet"
+path = "src/main.rs"

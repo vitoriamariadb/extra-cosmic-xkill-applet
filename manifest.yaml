@@ -1,0 +1,13 @@
+app-id: com.exemplo.CosmicXKillApplet
+runtime: org.freedesktop.Platform//24.08
+sdk: org.freedesktop.Sdk//24.08
+command: cosmic-xkill-applet
+modules:
+  - name: cosmic-xkill-applet
+    buildsystem: simple
+    build-commands:
+      - cargo build --release
+      - install -Dm0755 target/release/cosmic-xkill-applet /app/bin/
+    sources:
+      - type: dir
+        path: .
