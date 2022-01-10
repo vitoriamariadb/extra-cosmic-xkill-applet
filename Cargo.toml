@@ -9,6 +9,8 @@ license = "MIT"
 [dependencies]
 x11rb = "0.9"
 anyhow = "1.0"
+wayland-client = "0.29"
+wayland-protocols = { version = "0.29", features = ["client"] }
 
 [dev-dependencies]
 
