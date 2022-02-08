@@ -13,6 +13,9 @@ wayland-client = "0.29"
 wayland-protocols = { version = "0.29", features = ["client"] }
 gtk = "0.15"
 glib = "0.15"
+toml = "0.5"
+serde = { version = "1.0", features = ["derive"] }
+dirs = "4.0"
 
 [dev-dependencies]
 

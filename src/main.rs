@@ -1,9 +1,11 @@
+mod config;
 mod events;
 mod ui;
 mod wayland;
 mod x11;
 
 use anyhow::Result;
+use config::Config;
 use events::EventHandler;
 use ui::{create_notification, AppUI, UICommand};
 use wayland::{detect_session_type, SessionType};
@@ -11,50 +13,49 @@ use x11::X11Handler;
 use x11rb::rust_connection::RustConnection;
 
 fn main() -> Result<()> {
+    let config = Config::load()?;
     let args: Vec<String> = std::env::args().collect();
 
     if args.len() > 1 && args[1] == "--cli" {
-        run_cli_mode()?;
+        run_cli_mode(&config)?;
     } else {
-        run_gui_mode()?;
+        run_gui_mode(&config)?;
     }
 
     Ok(())
 }
 
-fn run_cli_mode() -> Result<()> {
+fn run_cli_mode(config: &Config) -> Result<()> {
     println!("Extra Cosmic XKill Applet v0.1.0");
 
     let session_type = detect_session_type();
     println!("Tipo de sessão detectada: {}", session_type.as_str());
 
-    match session_type {
-        SessionType::X11 => run_x11_mode()?,
-        SessionType::Wayland => {
-            println!("Modo Wayland ainda não suportado para kill de janelas");
-            println!("Usando fallback X11 se disponível...");
-            run_x11_mode()?;
-        }
-        SessionType::Unknown => {
-            println!("Tipo de sessão desconhecida. Tentando X11...");
-            run_x11_mode()?;
-        }
+    let use_wayland = config.general.prefer_wayland && session_type == SessionType::Wayland;
+
+    if use_wayland {
+        println!("Modo Wayland preferido, mas ainda não implementado");
+        println!("Usando fallback X11...");
     }
 
+    run_x11_mode(config)?;
     Ok(())
 }
 
-fn run_gui_mode() -> Result<()> {
+fn run_gui_mode(config: &Config) -> Result<()> {
     let ui = AppUI::new()?;
     let (_tx_status, rx_cmd) = ui.run();
 
+    let config_clone = config.clone();
     std::thread::spawn(move || {
         while let Ok(cmd) = rx_cmd.recv() {
             match cmd {
                 UICommand::Kill => {
-                    if let Err(e) = run_x11_mode() {
+                    if let Err(e) = run_x11_mode(&config_clone) {
                         eprintln!("Erro ao fechar janela: {}", e);
-                        create_notification("Erro", &format!("Falha: {}", e)).ok();
+                        if config_clone.general.show_notifications {
+                            create_notification("Erro", &format!("Falha: {}", e)).ok();
+                        }
                     }
                 }
                 UICommand::Quit => {
@@ -68,17 +69,23 @@ fn run_gui_mode() -> Result<()> {
     Ok(())
 }
 
-fn run_x11_mode() -> Result<()> {
+fn run_x11_mode(config: &Config) -> Result<()> {
     let (conn, screen_num) = RustConnection::connect(None)?;
     let handler = X11Handler::new()?;
     let mut event_handler = EventHandler::new(conn, screen_num);
 
     if let Some(window) = event_handler.wait_for_window_click()? {
-        if let Ok(name) = handler.get_window_name(window) {
-            create_notification("XKill", &format!("Fechando: {}", name)).ok();
+        if config.ui.show_window_names {
+            if let Ok(name) = handler.get_window_name(window) {
+                if config.general.show_notifications {
+                    create_notification("XKill", &format!("Fechando: {}", name)).ok();
+                }
+            }
         }
         handler.kill_window(window)?;
-        create_notification("XKill", "Janela fechada com sucesso").ok();
+        if config.general.show_notifications {
+            create_notification("XKill", "Janela fechada com sucesso").ok();
+        }
     }
 
     Ok(())

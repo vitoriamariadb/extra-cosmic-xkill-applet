@@ -1,0 +1,15 @@
+[general]
+auto_start = false
+show_notifications = true
+prefer_wayland = false
+
+[ui]
+theme = "default"
+show_window_names = true
+window_width = 350
+window_height = 200
+
+[hotkey]
+enabled = true
+modifiers = ["Ctrl", "Alt"]
+key = "K"
