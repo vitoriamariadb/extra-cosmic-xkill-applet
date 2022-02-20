@@ -18,6 +18,7 @@ serde = { version = "1.0", features = ["derive"] }
 dirs = "4.0"
 
 [dev-dependencies]
+tempfile = "3.3"
 
 [[bin]]
 name = "xkill-applet"
