@@ -1,0 +1,29 @@
+Source: extra-cosmic-xkill
+Section: utils
+Priority: optional
+Maintainer: Vitória Maria <vitoriamaria.sds@gmail.com>
+Build-Depends: debhelper (>= 11),
+               cargo,
+               rustc,
+               libx11-dev,
+               libgtk-3-dev,
+               libwayland-dev,
+               pkg-config
+Standards-Version: 4.5.0
+Homepage: https://github.com/vitoriamariadb/extra-cosmic-xkill-applet
+
+Package: extra-cosmic-xkill
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libgtk-3-0, libx11-6, libwayland-client0
+Description: Applet sistema para gerenciamento de janelas X11/Wayland
+ Extra Cosmic XKill é um applet sistema em Rust para gerenciamento
+ de janelas X11/Wayland. Permite fechar janelas através de clique,
+ similar ao xkill tradicional, mas com interface gráfica GTK moderna.
+ .
+ Funcionalidades:
+  - Fechar janelas através de clique
+  - Suporte a X11 e detecção de Wayland
+  - Interface gráfica GTK
+  - Modo CLI disponível
+  - Configuração via arquivo TOML
+  - Notificações do sistema

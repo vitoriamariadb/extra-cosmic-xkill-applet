@@ -2,9 +2,13 @@
 name = "extra-cosmic-xkill"
 version = "0.1.0"
 edition = "2021"
-authors = ["Vitória Maria <vitoria.maria@example.com>"]
+authors = ["Vitória Maria <vitoriamaria.sds@gmail.com>"]
 description = "Applet sistema para gerenciamento de janelas X11/Wayland"
 license = "MIT"
+homepage = "https://github.com/vitoriamariadb/extra-cosmic-xkill-applet"
+repository = "https://github.com/vitoriamariadb/extra-cosmic-xkill-applet"
+keywords = ["xkill", "x11", "wayland", "gtk", "window-manager"]
+categories = ["gui", "command-line-utilities"]
 
 [dependencies]
 x11rb = "0.9"
@@ -23,3 +27,20 @@ tempfile = "3.3"
 [[bin]]
 name = "xkill-applet"
 path = "src/main.rs"
+
+[package.metadata.deb]
+maintainer = "Vitória Maria <vitoriamaria.sds@gmail.com>"
+copyright = "2022, Vitória Maria <vitoriamaria.sds@gmail.com>"
+license-file = ["LICENSE", "4"]
+extended-description = """\
+Extra Cosmic XKill é um applet sistema em Rust para gerenciamento \
+de janelas X11/Wayland. Permite fechar janelas através de clique, \
+similar ao xkill tradicional, mas com interface gráfica GTK moderna."""
+depends = "$auto, libgtk-3-0, libx11-6, libwayland-client0"
+section = "utils"
+priority = "optional"
+assets = [
+    ["target/release/xkill-applet", "usr/bin/", "755"],
+    ["config.example.toml", "usr/share/doc/extra-cosmic-xkill/", "644"],
+    ["README.md", "usr/share/doc/extra-cosmic-xkill/", "644"],
+]

@@ -1,0 +1,12 @@
+extra-cosmic-xkill (0.1.0) unstable; urgency=low
+
+  * Initial release
+  * X11 bindings implementation
+  * Event capture system
+  * Wayland detection support
+  * GTK user interface
+  * TOML configuration
+  * Unit tests
+  * Documentation
+
+ -- Vitória Maria <vitoriamaria.sds@gmail.com>  Fri, 25 Mar 2022 16:00:00 -0300
