@@ -1,20 +1,17 @@
 use anyhow::{Context, Result};
 use std::env;
-use wayland_client::{Connection, Proxy};
-use wayland_client::protocol::wl_display::WlDisplay;
+use wayland_client::Display;
 
 pub struct WaylandHandler {
-    display: WlDisplay,
+    _display: Display,
 }
 
 impl WaylandHandler {
     pub fn new() -> Result<Self> {
-        let conn = Connection::connect_to_env()
+        let display = Display::connect_to_env()
             .context("Falha ao conectar ao servidor Wayland")?;
 
-        let display = conn.display();
-
-        Ok(Self { display })
+        Ok(Self { _display: display })
     }
 
     pub fn is_wayland_session() -> bool {
