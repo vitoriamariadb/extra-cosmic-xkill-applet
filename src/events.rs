@@ -1,8 +1,6 @@
 use anyhow::{Context, Result};
 use x11rb::connection::Connection;
-use x11rb::protocol::xproto::{
-    ButtonPressEvent, ConnectionExt, EventMask, GrabMode, ModMask, Window,
-};
+use x11rb::protocol::xproto::{ConnectionExt, EventMask, GrabMode, ModMask, Window};
 use x11rb::protocol::Event;
 use x11rb::rust_connection::RustConnection;
 
@@ -28,7 +26,7 @@ impl EventHandler {
             .grab_pointer(
                 false,
                 root,
-                EventMask::BUTTON_PRESS | EventMask::BUTTON_RELEASE,
+                u32::from(EventMask::BUTTON_PRESS | EventMask::BUTTON_RELEASE) as u16,
                 GrabMode::ASYNC,
                 GrabMode::ASYNC,
                 x11rb::NONE,
