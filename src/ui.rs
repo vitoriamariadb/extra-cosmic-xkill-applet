@@ -23,7 +23,7 @@ impl AppUI {
     }
 
     pub fn run(&self) -> (Sender<String>, Receiver<UICommand>) {
-        let (tx_status, rx_status) = channel();
+        let (tx_status, _rx_status) = channel();
         let (tx_cmd, rx_cmd) = channel();
 
         let tx_cmd_clone = tx_cmd.clone();

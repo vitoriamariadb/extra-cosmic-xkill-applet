@@ -90,6 +90,7 @@ impl Config {
         Ok(config_dir.join("extra-cosmic-xkill").join("config.toml"))
     }
 
+    #[allow(dead_code)]
     pub fn get_config_dir() -> Result<PathBuf> {
         let config_dir = dirs::config_dir().context("Falha ao obter diretório de configuração")?;
         Ok(config_dir.join("extra-cosmic-xkill"))

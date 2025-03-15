@@ -5,21 +5,26 @@ use x11rb::rust_connection::RustConnection;
 
 pub struct X11Handler {
     conn: RustConnection,
-    screen_num: usize,
+    _screen_num: usize,
 }
 
 impl X11Handler {
     pub fn new() -> Result<Self> {
-        let (conn, screen_num) = RustConnection::connect(None)
-            .context("Falha ao conectar ao servidor X11")?;
+        let (conn, screen_num) =
+            RustConnection::connect(None).context("Falha ao conectar ao servidor X11")?;
 
-        Ok(Self { conn, screen_num })
+        Ok(Self {
+            conn,
+            _screen_num: screen_num,
+        })
     }
 
+    #[allow(dead_code)]
     pub fn get_root_window(&self) -> Window {
-        self.conn.setup().roots[self.screen_num].root
+        self.conn.setup().roots[self._screen_num].root
     }
 
+    #[allow(dead_code)]
     pub fn list_windows(&self) -> Result<Vec<Window>> {
         let root = self.get_root_window();
         let tree = self

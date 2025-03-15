@@ -2,14 +2,15 @@ use anyhow::{Context, Result};
 use std::env;
 use wayland_client::Display;
 
+#[allow(dead_code)]
 pub struct WaylandHandler {
     _display: Display,
 }
 
 impl WaylandHandler {
+    #[allow(dead_code)]
     pub fn new() -> Result<Self> {
-        let display = Display::connect_to_env()
-            .context("Falha ao conectar ao servidor Wayland")?;
+        let display = Display::connect_to_env().context("Falha ao conectar ao servidor Wayland")?;
 
         Ok(Self { _display: display })
     }
@@ -18,6 +19,7 @@ impl WaylandHandler {
         env::var("WAYLAND_DISPLAY").is_ok()
     }
 
+    #[allow(dead_code)]
     pub fn get_display_name(&self) -> String {
         env::var("WAYLAND_DISPLAY").unwrap_or_else(|_| "wayland-0".to_string())
     }
