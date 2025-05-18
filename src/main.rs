@@ -1,5 +1,6 @@
 mod config;
 mod events;
+mod logging;
 mod ui;
 mod wayland;
 mod x11;
@@ -13,6 +14,7 @@ use x11::X11Handler;
 use x11rb::rust_connection::RustConnection;
 
 fn main() -> Result<()> {
+    logging::info("main", "Iniciando Extra Cosmic XKill Applet");
     let config = Config::load()?;
     let args: Vec<String> = std::env::args().collect();
 
@@ -90,3 +92,5 @@ fn run_x11_mode(config: &Config) -> Result<()> {
 
     Ok(())
 }
+
+// "O impedimento para a acao impulsiona a acao. O que esta no caminho se torna o caminho." - Marco Aurelio
