@@ -96,3 +96,76 @@ impl Config {
         Ok(config_dir.join("extra-cosmic-xkill"))
     }
 }
+
+pub struct ConfigBuilder {
+    config: Config,
+}
+
+impl ConfigBuilder {
+    pub fn new() -> Self {
+        Self {
+            config: Config::default(),
+        }
+    }
+
+    pub fn auto_start(mut self, value: bool) -> Self {
+        self.config.general.auto_start = value;
+        self
+    }
+
+    pub fn show_notifications(mut self, value: bool) -> Self {
+        self.config.general.show_notifications = value;
+        self
+    }
+
+    pub fn prefer_wayland(mut self, value: bool) -> Self {
+        self.config.general.prefer_wayland = value;
+        self
+    }
+
+    pub fn theme(mut self, theme: impl Into<String>) -> Self {
+        self.config.ui.theme = theme.into();
+        self
+    }
+
+    pub fn window_size(mut self, width: i32, height: i32) -> Self {
+        self.config.ui.window_width = width;
+        self.config.ui.window_height = height;
+        self
+    }
+
+    pub fn hotkey(mut self, enabled: bool, modifiers: Vec<String>, key: impl Into<String>) -> Self {
+        self.config.hotkey.enabled = enabled;
+        self.config.hotkey.modifiers = modifiers;
+        self.config.hotkey.key = key.into();
+        self
+    }
+
+    pub fn validate(&self) -> Result<()> {
+        if self.config.ui.window_width < 100 || self.config.ui.window_width > 3840 {
+            anyhow::bail!("Largura da janela deve estar entre 100 e 3840");
+        }
+        if self.config.ui.window_height < 100 || self.config.ui.window_height > 2160 {
+            anyhow::bail!("Altura da janela deve estar entre 100 e 2160");
+        }
+        if self.config.hotkey.enabled && self.config.hotkey.key.is_empty() {
+            anyhow::bail!("Tecla de atalho nao pode ser vazia quando habilitada");
+        }
+        let valid_themes = ["default", "dark", "light", "dracula"];
+        if !valid_themes.contains(&self.config.ui.theme.as_str()) {
+            anyhow::bail!(
+                "Tema invalido: {}. Opcoes: {:?}",
+                self.config.ui.theme,
+                valid_themes
+            );
+        }
+        Ok(())
+    }
+
+    pub fn build(self) -> Result<Config> {
+        self.validate()?;
+        Ok(self.config)
+    }
+}
+
+// "Nao e porque as coisas sao dificeis que nao ousamos; e porque nao ousamos que sao dificeis." - Seneca
