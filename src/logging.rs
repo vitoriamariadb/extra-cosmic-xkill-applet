@@ -6,9 +6,8 @@ use std::time::SystemTime;
 
 use once_cell::sync::Lazy;
 
-static LOGGER: Lazy<AppLogger> = Lazy::new(|| {
-    AppLogger::new().expect("Falha ao inicializar logger")
-});
+static LOGGER: Lazy<AppLogger> =
+    Lazy::new(|| AppLogger::new().expect("Falha ao inicializar logger"));
 
 pub struct AppLogger {
     log_path: PathBuf,

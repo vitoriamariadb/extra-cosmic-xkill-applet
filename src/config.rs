@@ -101,11 +101,17 @@ pub struct ConfigBuilder {
     config: Config,
 }
 
-impl ConfigBuilder {
-    pub fn new() -> Self {
+impl Default for ConfigBuilder {
+    fn default() -> Self {
         Self {
             config: Config::default(),
         }
+    }
+}
+
+impl ConfigBuilder {
+    pub fn new() -> Self {
+        Self::default()
     }
 
     pub fn auto_start(mut self, value: bool) -> Self {

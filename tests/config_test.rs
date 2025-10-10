@@ -100,25 +100,19 @@ fn test_config_builder_custom() {
 
 #[test]
 fn test_config_builder_invalid_width() {
-    let result = ConfigBuilder::new()
-        .window_size(50, 200)
-        .build();
+    let result = ConfigBuilder::new().window_size(50, 200).build();
     assert!(result.is_err());
 }
 
 #[test]
 fn test_config_builder_invalid_theme() {
-    let result = ConfigBuilder::new()
-        .theme("neon")
-        .build();
+    let result = ConfigBuilder::new().theme("neon").build();
     assert!(result.is_err());
 }
 
 #[test]
 fn test_config_builder_empty_hotkey() {
-    let result = ConfigBuilder::new()
-        .hotkey(true, vec![], "")
-        .build();
+    let result = ConfigBuilder::new().hotkey(true, vec![], "").build();
     assert!(result.is_err());
 }
 
