@@ -20,3 +20,30 @@ fn test_session_type_clone() {
     let cloned = session.clone();
     assert_eq!(session, cloned);
 }
+
+#[test]
+fn test_session_type_debug() {
+    let session = SessionType::X11;
+    assert_eq!(format!("{:?}", session), "X11");
+}
+
+#[test]
+fn test_session_type_copy() {
+    let original = SessionType::Wayland;
+    let copied = original;
+    assert_eq!(original, copied);
+}
+
+#[test]
+fn test_session_type_all_variants_as_str() {
+    let variants = [
+        (SessionType::X11, "X11"),
+        (SessionType::Wayland, "Wayland"),
+        (SessionType::Unknown, "Unknown"),
+    ];
+    for (session, expected) in variants {
+        assert_eq!(session.as_str(), expected);
+    }
+}
+
+// "A liberdade e o direito de fazer tudo o que as leis permitem." - Montesquieu

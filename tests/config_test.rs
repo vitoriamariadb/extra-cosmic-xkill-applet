@@ -1,4 +1,4 @@
-use extra_cosmic_xkill::config::Config;
+use extra_cosmic_xkill::config::{Config, ConfigBuilder};
 use std::fs;
 use tempfile::tempdir;
 
@@ -73,3 +73,53 @@ fn test_config_save_and_load() {
     );
     assert_eq!(original_config.ui.theme, loaded_config.ui.theme);
 }
+
+#[test]
+fn test_config_builder_default() {
+    let config = ConfigBuilder::new().build().unwrap();
+    assert!(!config.general.auto_start);
+    assert!(config.general.show_notifications);
+    assert_eq!(config.ui.theme, "default");
+}
+
+#[test]
+fn test_config_builder_custom() {
+    let config = ConfigBuilder::new()
+        .auto_start(true)
+        .theme("dark")
+        .window_size(800, 600)
+        .hotkey(true, vec!["Super".to_string()], "X")
+        .build()
+        .unwrap();
+
+    assert!(config.general.auto_start);
+    assert_eq!(config.ui.theme, "dark");
+    assert_eq!(config.ui.window_width, 800);
+    assert_eq!(config.hotkey.key, "X");
+}
+
+#[test]
+fn test_config_builder_invalid_width() {
+    let result = ConfigBuilder::new()
+        .window_size(50, 200)
+        .build();
+    assert!(result.is_err());
+}
+
+#[test]
+fn test_config_builder_invalid_theme() {
+    let result = ConfigBuilder::new()
+        .theme("neon")
+        .build();
+    assert!(result.is_err());
+}
+
+#[test]
+fn test_config_builder_empty_hotkey() {
+    let result = ConfigBuilder::new()
+        .hotkey(true, vec![], "")
+        .build();
+    assert!(result.is_err());
+}
+
+// "A verdadeira sabedoria esta em reconhecer a propria ignorancia." - Socrates
