@@ -98,6 +98,7 @@ impl Config {
 }
 
 #[derive(Default)]
+#[allow(dead_code)]
 pub struct ConfigBuilder {
     config: Config,
 }
