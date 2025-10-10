@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use anyhow::{Context, Result};
 use serde::{Deserialize, Serialize};
 use std::fs;
@@ -98,7 +100,6 @@ impl Config {
 }
 
 #[derive(Default)]
-#[allow(dead_code)]
 pub struct ConfigBuilder {
     config: Config,
 }
