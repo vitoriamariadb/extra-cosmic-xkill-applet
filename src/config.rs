@@ -97,16 +97,9 @@ impl Config {
     }
 }
 
+#[derive(Default)]
 pub struct ConfigBuilder {
     config: Config,
-}
-
-impl Default for ConfigBuilder {
-    fn default() -> Self {
-        Self {
-            config: Config::default(),
-        }
-    }
 }
 
 impl ConfigBuilder {
