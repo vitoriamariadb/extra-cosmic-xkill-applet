@@ -5,6 +5,7 @@ mod ui;
 mod wayland;
 mod x11;
 
+
 use anyhow::Result;
 use config::Config;
 use events::EventHandler;
