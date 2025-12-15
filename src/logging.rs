@@ -11,6 +11,7 @@ use once_cell::sync::Lazy;
 static LOGGER: Lazy<AppLogger> =
     Lazy::new(|| AppLogger::new().expect("Falha ao inicializar logger"));
 
+/// Logger rotacionado para registro de eventos da aplicacao.
 pub struct AppLogger {
     log_path: PathBuf,
     file: Mutex<fs::File>,
