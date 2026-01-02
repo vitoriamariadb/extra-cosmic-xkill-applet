@@ -1,5 +1,6 @@
 use extra_cosmic_xkill::config::{Config, ConfigBuilder};
 use std::fs;
+
 use tempfile::tempdir;
 
 #[test]
