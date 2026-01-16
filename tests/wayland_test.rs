@@ -1,3 +1,4 @@
+/// Testes unitarios para deteccao de sessao Wayland.
 use extra_cosmic_xkill::wayland::SessionType;
 
 #[test]
