@@ -15,7 +15,7 @@ x11rb = "0.9"
 anyhow = "1.0"
 wayland-client = "0.29"
 wayland-protocols = { version = "0.29", features = ["client"] }
-gtk = "0.15"
+gtk = "0.18"
 glib = "0.15"
 toml = "0.5"
 serde = { version = "1.0", features = ["derive"] }
