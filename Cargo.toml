@@ -11,7 +11,7 @@ keywords = ["xkill", "x11", "wayland", "gtk", "window-manager"]
 categories = ["gui", "command-line-utilities"]
 
 [dependencies]
-x11rb = "0.9"
+x11rb = "0.13"
 anyhow = "1.0"
 wayland-client = "0.29"
 wayland-protocols = { version = "0.29", features = ["client"] }
